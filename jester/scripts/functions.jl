@@ -1,15 +1,15 @@
-function biased_projection(Y, r; no_sv=false)
-    U, S, V = svd(Y)
-    if no_sv
-        return U[:, 1:r], V[:, 1:r] # no singular values
-    else
+@everywhere begin
+    function biased_projection(Y, r)
+        U, S, V = svd(Y)
         return U[:, 1:r] * diagm(S[1:r]) * V[:, 1:r]'
     end
 end
 
-function debiased_projection(Y, Wsqrt, r)
-    W_inv_sqrt = 1 ./ Wsqrt 
-    return W_inv_sqrt .* biased_projection(W_inv_sqrt .* Y, r)
+@everywhere begin 
+    function debiased_projection(Y, Wsqrt, r)
+        W_inv_sqrt = 1 ./ Wsqrt 
+        return W_inv_sqrt .* biased_projection(W_inv_sqrt .* Y, r)
+    end
 end
 
 function get_random_matrix(d1, d2, rank)
