@@ -9,7 +9,8 @@ masks = []
 for csv in csvs
     df = CSV.read(data_dir * "/" * csv)
     A = convert(Array, df)
-    A = convert(Array{Float64, 2}, A[:, 2:end])
+    A = convert(Array{Float64, 2}, get.(A[:, 2:end]))
+    #A = convert(Array{Float64, 2}, A[:, 2:end])
     push!(masks, 1.0 * (A .!= 99))
 end
 mask = vcat(masks...)
