@@ -1,10 +1,6 @@
-function biased_projection(Y, r; no_sv=false)
-    U, S, V = svd(Y)
-    if no_sv
-        return U[:, 1:r], V[:, 1:r] # no singular values
-    else
-        return U[:, 1:r] * diagm(S[1:r]) * V[:, 1:r]'
-    end
+function biased_projection(Y, r)
+    U, S, V = tsvd(Y, r)
+    return U * diagm(S) * V'
 end
 
 function debiased_projection(Y, Wsqrt, r)

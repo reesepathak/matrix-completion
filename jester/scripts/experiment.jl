@@ -1,5 +1,4 @@
-Pkg.add("JLD")
-using JLD; srand(1)
+using TSVD, JLD; srand(1)
 include("functions.jl")
 
 println("Starting experiments.....")
