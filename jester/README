@@ -1,0 +1,2 @@
+jester "jokes" dataset: http://eigentaste.berkeley.edu/dataset/
+replicate experiment by running sh run_experiment.sh
