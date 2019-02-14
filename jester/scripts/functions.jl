@@ -1,11 +1,15 @@
-function biased_projection(Y, r)
-    U, S, V = tsvd(Y, r)
-    return U * diagm(S) * V'
+@everywhere begin
+    function biased_projection(Y, r)
+        U, S, V = tsvd(Y, r)
+        return U * diagm(S) * V'
+    end
 end
 
-function debiased_projection(Y, Wsqrt, r)
-    W_inv_sqrt = 1 ./ Wsqrt 
-    return W_inv_sqrt .* biased_projection(W_inv_sqrt .* Y, r)
+@everywhere begin 
+    function debiased_projection(Y, Wsqrt, r)
+        W_inv_sqrt = 1 ./ Wsqrt 
+        return W_inv_sqrt .* biased_projection(W_inv_sqrt .* Y, r)
+    end
 end
 
 function get_random_matrix(d1, d2, rank)
